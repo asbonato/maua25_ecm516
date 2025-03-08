@@ -1,24 +1,200 @@
-// arrow functions
-const hello = () => console.log("Hello")
-hello()
-
-const dobro = (valor) => valor * 2
-console.log(dobro(10))
-
-const triplo = (valor) => {
-    return valor * 3
+//JSON object
+let pessoa = {
+    nome: "João",
+    idade: 17,
 }
-console.log(triplo(10))
+console.log(pessoa)
+console.log('Me chamo ' + pessoa.nome)
+console.log('Minha idade é ' + pessoa['idade'] + " anos")
 
-const ePar = n => {
-    n % 2 === 0
+function getPropriedade(prop){
+    console.log(pessoa[prop])
 }
-console.log(ePar(10))
+getPropriedade('nome')
+getPropriedade('idade')
 
-const ePar1 = n => {
-    return n % 2 === 0
+let pessoaComEndereco = {
+    nome: 'Maria',
+    idade: 21,
+    endereco: {
+        logradouro: 'Rua B',
+        numero: 121,
+        complemento: 'apto 12'
+    },
 }
-console.log(ePar1(10))
+console.log(
+    `
+    Sou ${pessoaComEndereco.nome},
+    tenho ${pessoaComEndereco.idade} anos
+    e moro na ${pessoaComEndereco.endereco.logradouro},
+    no número ${pessoaComEndereco['endereco']['numero']},
+    apartamento ${pessoaComEndereco.endereco['complemento']}
+    `
+)
+
+let concessionaria = {
+    cnpj: "000111222/0001-45",
+    endereco: {
+        logradouro: 'Rua A',
+        numero: 10,
+        bairro: "Vila J",
+        coordenadas: {
+            latitude: 43.12345,
+            longitude: -23.002321
+        }
+    },
+    veiculos: [
+        {
+            marca: "Ford",
+            modelo: "Ecosport",
+            anoDeFabricacao: 2018
+        },
+        {
+            marca: "Chevrolet",
+            modelo: "Onix",
+            anoDeFabricacao: 2020
+        },
+        {
+            marca: "Volkswagen",
+            modelo: "Nivus",
+            anoDeFabricacao: 2023
+        }
+    ]
+}
+
+//uso de JSON Array
+for (let veiculo of concessionaria.veiculos){
+    console.log(`Marca: ${veiculo.marca}`)
+    console.log(`Modelo: ${veiculo.modelo}`)
+    console.log(`Ano de Fabricação: ${veiculo.anoDeFabricacao}`)
+}
+
+//funções em um JSON
+let calculadora = {
+    soma: (a, b) => a + b,
+    subtracao: function(a, b){
+        return a - b
+    }
+}
+
+console.log(`2 + 3 = ${calculadora.soma(2, 3)}`)
+console.log(`3 - 2 = ${calculadora.subtracao(3, 2)}`)
+
+
+// //escopo de uma função
+// function f() {
+//     let nome = 'João'
+//     function g() {
+//         console.log(nome)
+//     }
+//     g()
+// }
+// f()
+
+// function ola(){
+//     let nome = 'João'
+//     return function(){
+//         console.log('Olá, '+nome)
+//     }
+// }
+// let olaResult = ola()
+// olaResult()
+
+// //também vale com parâmetros
+// function saudacoesFactory(saudacao, nome){
+//     return function(){
+//         console.log(saudacao + ', ' + nome)
+//     }
+// }
+// let olaJoao = saudacoesFactory('Olá', 'João')
+// let tchauJose = saudacoesFactory('Tchau', 'José')
+// olaJoao()
+// tchauJose()
+
+// function eAgora(){
+//     let cont = 1
+//     function f1(){
+//         console.log(cont)
+//     }
+//     cont++
+//     function f2(){
+//         console.log(cont)
+//     }
+//     //JSON contendo duas funções
+//     return {f1, f2}
+// }
+// let eAgoraResult = eAgora()
+// eAgoraResult.f1()
+// eAgoraResult.f2()
+
+// //closure
+// //uma função pode ser atribuída a uma variável
+// let umaFuncao = function(){
+//     console.log('Fui armazenada em uma variável')
+// }
+// umaFuncao()
+// /* f recebe uma função como parâmetro e por isso
+//    é chamada de função de alta ordem; por devolver
+//    uma função g também é de alta ordem
+// */
+// function f (funcao){
+//     //executo a função recebida
+//     funcao()
+// }
+// f(umaFuncao)
+
+// function g(){
+//     function outraFuncao(){
+//         console.log("Fui criada por g")
+//     }
+//     return outraFuncao
+// }
+// // não escreve nada
+// g()
+// //também não
+// f(g)
+// //agora sim
+// f(g())
+
+// //definir a função no momento em que ela será chamada
+// f(function (){
+//     console.log("Estou sendo passada para f")
+// })
+
+// //g pode ser chamada assim
+// const gResult = g()
+// console.log(gResult)
+// gResult()
+// //posso chamar assim também
+// g()()
+
+// //f(g()()) //dá erro
+// //f(1) // dá erro
+
+
+
+
+// // arrow functions
+// const hello = () => console.log("Hello")
+// hello()
+
+// const dobro = (valor) => valor * 2
+// console.log(dobro(10))
+
+// const triplo = (valor) => {
+//     return valor * 3
+// }
+// console.log(triplo(10))
+
+// const ePar = n => {
+//     n % 2 === 0
+// }
+// console.log(ePar(10))
+
+// const ePar1 = n => {
+//     return n % 2 === 0
+// }
+// console.log(ePar1(10))
 
 // // funções
 // function hello (){
