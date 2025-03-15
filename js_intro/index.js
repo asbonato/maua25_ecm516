@@ -1,84 +1,222 @@
-//JSON object
-let pessoa = {
-    nome: "João",
-    idade: 17,
-}
-console.log(pessoa)
-console.log('Me chamo ' + pessoa.nome)
-console.log('Minha idade é ' + pessoa['idade'] + " anos")
+//promises
 
-function getPropriedade(prop){
-    console.log(pessoa[prop])
-}
-getPropriedade('nome')
-getPropriedade('idade')
-
-let pessoaComEndereco = {
-    nome: 'Maria',
-    idade: 21,
-    endereco: {
-        logradouro: 'Rua B',
-        numero: 121,
-        complemento: 'apto 12'
-    },
-}
-console.log(
-    `
-    Sou ${pessoaComEndereco.nome},
-    tenho ${pessoaComEndereco.idade} anos
-    e moro na ${pessoaComEndereco.endereco.logradouro},
-    no número ${pessoaComEndereco['endereco']['numero']},
-    apartamento ${pessoaComEndereco.endereco['complemento']}
-    `
-)
-
-let concessionaria = {
-    cnpj: "000111222/0001-45",
-    endereco: {
-        logradouro: 'Rua A',
-        numero: 10,
-        bairro: "Vila J",
-        coordenadas: {
-            latitude: 43.12345,
-            longitude: -23.002321
+function calculoDemorado(numero){
+    return new Promise(function (resolve, reject) {
+        let res = 0
+        for (let i = 1; i <= numero; i++){
+            res += i
         }
-    },
-    veiculos: [
-        {
-            marca: "Ford",
-            modelo: "Ecosport",
-            anoDeFabricacao: 2018
-        },
-        {
-            marca: "Chevrolet",
-            modelo: "Onix",
-            anoDeFabricacao: 2020
-        },
-        {
-            marca: "Volkswagen",
-            modelo: "Nivus",
-            anoDeFabricacao: 2023
-        }
-    ]
+        resolve(res)
+    })
 }
 
-//uso de JSON Array
-for (let veiculo of concessionaria.veiculos){
-    console.log(`Marca: ${veiculo.marca}`)
-    console.log(`Modelo: ${veiculo.modelo}`)
-    console.log(`Ano de Fabricação: ${veiculo.anoDeFabricacao}`)
+calculoDemorado(10)
+    .then((resultado)=>{
+        console.log(resultado)
+    })
+
+function calculoRapidinho(numero){
+    return Promise.resolve(numero*(numero+1)/2)
+}
+calculoRapidinho(100)
+    .then((resultado) => {
+        console.log(resultado)
+    })
+
+console.log('Esperando')
+
+function calculoRapidinhoRobusto(numero){
+    return numero >= 0
+        ? Promise.resolve(numero*(numero+1)/2)
+        : Promise.reject('Somente valores positivos')
 }
 
-//funções em um JSON
-let calculadora = {
-    soma: (a, b) => a + b,
-    subtracao: function(a, b){
-        return a - b
-    }
-}
+calculoRapidinhoRobusto(20)
+    .then((resultado) => {
+        console.log(resultado)
+    })
+    .catch((err) => {
+        console.log(err)
+    })
 
-console.log(`2 + 3 = ${calculadora.soma(2, 3)}`)
-console.log(`3 - 2 = ${calculadora.subtracao(3, 2)}`)
+    calculoRapidinhoRobusto(-1)
+    .then((resultado) => {
+        console.log(resultado)
+    })
+    .catch((err) => {
+        console.log(err)
+    })
+
+
+
+// const fs = require('fs')
+// const abrirArquivo = function (nomeArquivo){
+//     const exibirConteudo = function (erro, conteudo) {
+//         if (erro) {
+//             console.log(`Deu erro: ${erro}`)
+//         } else {
+//             console.log(conteudo.toString())
+//             const dobro = conteudo.toString() * 2
+//             const finalizar = function(erro){
+//                 if(erro){
+//                     console.log('Deu erro tentando salvar o código')
+//                 } else {
+//                     console.log('Salvou o dobro com sucesso')
+//                 }
+//             }
+//             fs.writeFile('dobro.txt', dobro.toString(), finalizar)
+//         }
+//     }
+//     fs.readFile(nomeArquivo, exibirConteudo)
+// }
+// abrirArquivo('arquivo.txt')
+
+// const fs = require('fs')
+// const abrirArquivo = function (nomeArquivo){
+//     const exibirConteudo = function (erro, conteudo) {
+//         if (erro) {
+//             console.log(`Deu erro: ${erro}`)
+//         } else {
+//             console.log(conteudo.toString())
+//         }
+//     }
+//     fs.readFile(nomeArquivo, exibirConteudo)
+// }
+// abrirArquivo('arquivo.txt')
+
+// function demorada(tempo){
+//     console.log(`demorada ${tempo}`)
+//     const atualMaisTempo = new Date().getTime() + tempo
+//     while (new Date().getTime() <= atualMaisTempo);
+//     const d = 8 + 4
+//     return d
+// }
+// setTimeout(function(){demorada(2000)}, 2000)
+// setTimeout(function(){demorada(1000)}, 1000)
+// console.log('fim do script principal')
+
+// setTimeout(function(){
+//     console.log('dentro da timeout')
+// }, 0)
+// const a = new Date().getTime() + 5000
+// while(new Date().getTime() <= a);
+// console.log('fora da timeout')
+
+// function demorada(){
+//     const atualMais2Segundos = new Date().getTime() + 2000
+//     while(new Date().getTime() <= atualMais2Segundos);
+//     const d = 8 + 4
+//     return d
+// }
+// const a = 2 + 3
+// const b = 5 + 9
+// //const d = demorada()
+// ///* o valor da constante e não depende do valor
+// //   devolvido pela função demorada */
+
+// // a função será executada depois de, pelo menos, 500
+// // milissegundos
+// setTimeout(function(){
+//     const d = demorada()
+//     console.log(d)
+// }, 500)
+// //enquanto isso, essas linhas prosseguem executando
+// //sem ficar esperando
+// const e = 2 + a + b
+// console.log(e)
+
+
+// // modelo single thread
+// console.log("Eu primeiro")
+// console.log("Agora eu")
+// console.log("Sempre vou ser a última")
+
+// const a = 2 + 7
+// const b = 5
+// console.log(a + b)
+
+
+// //JSON object
+// let pessoa = {
+//     nome: "João",
+//     idade: 17,
+// }
+// console.log(pessoa)
+// console.log('Me chamo ' + pessoa.nome)
+// console.log('Minha idade é ' + pessoa['idade'] + " anos")
+
+// function getPropriedade(prop){
+//     console.log(pessoa[prop])
+// }
+// getPropriedade('nome')
+// getPropriedade('idade')
+
+// let pessoaComEndereco = {
+//     nome: 'Maria',
+//     idade: 21,
+//     endereco: {
+//         logradouro: 'Rua B',
+//         numero: 121,
+//         complemento: 'apto 12'
+//     },
+// }
+// console.log(
+//     `
+//     Sou ${pessoaComEndereco.nome},
+//     tenho ${pessoaComEndereco.idade} anos
+//     e moro na ${pessoaComEndereco.endereco.logradouro},
+//     no número ${pessoaComEndereco['endereco']['numero']},
+//     apartamento ${pessoaComEndereco.endereco['complemento']}
+//     `
+// )
+
+// let concessionaria = {
+//     cnpj: "000111222/0001-45",
+//     endereco: {
+//         logradouro: 'Rua A',
+//         numero: 10,
+//         bairro: "Vila J",
+//         coordenadas: {
+//             latitude: 43.12345,
+//             longitude: -23.002321
+//         }
+//     },
+//     veiculos: [
+//         {
+//             marca: "Ford",
+//             modelo: "Ecosport",
+//             anoDeFabricacao: 2018
+//         },
+//         {
+//             marca: "Chevrolet",
+//             modelo: "Onix",
+//             anoDeFabricacao: 2020
+//         },
+//         {
+//             marca: "Volkswagen",
+//             modelo: "Nivus",
+//             anoDeFabricacao: 2023
+//         }
+//     ]
+// }
+
+// //uso de JSON Array
+// for (let veiculo of concessionaria.veiculos){
+//     console.log(`Marca: ${veiculo.marca}`)
+//     console.log(`Modelo: ${veiculo.modelo}`)
+//     console.log(`Ano de Fabricação: ${veiculo.anoDeFabricacao}`)
+// }
+
+// //funções em um JSON
+// let calculadora = {
+//     soma: (a, b) => a + b,
+//     subtracao: function(a, b){
+//         return a - b
+//     }
+// }
+
+// console.log(`2 + 3 = ${calculadora.soma(2, 3)}`)
+// console.log(`3 - 2 = ${calculadora.subtracao(3, 2)}`)
 
 
 // //escopo de uma função
