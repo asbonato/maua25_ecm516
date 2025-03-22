@@ -1,51 +1,97 @@
-//promises
+async function hello(nome){
+    return 'Oi, '+nome
+}
+const boasVindas = hello('Maria')
+console.log(boasVindas)
+boasVindas.then(res => console.log(res))
 
-function calculoDemorado(numero){
-    return new Promise(function (resolve, reject) {
-        let res = 0
-        for (let i = 1; i <= numero; i++){
-            res += i
-        }
-        resolve(res)
-    })
+function fatorial(n){
+    if (n < 0) return Promise.reject('Valor não pode ser negativo')
+    let res = 1
+    for (let i = 2; i <= n; i++){
+        res *= i
+    }
+    return Promise.resolve(res)
 }
 
-calculoDemorado(10)
-    .then((resultado)=>{
-        console.log(resultado)
-    })
-
-function calculoRapidinho(numero){
-    return Promise.resolve(numero*(numero+1)/2)
+function chamadaComThenCatch(){
+    fatorial(5)
+        .then(res => console.log(res))
+        .catch(err => console.log(err))
+    fatorial(-5)
+        .then(res => console.log(res))
+        .catch(err => console.log(err))
 }
-calculoRapidinho(100)
-    .then((resultado) => {
-        console.log(resultado)
-    })
+chamadaComThenCatch()
 
-console.log('Esperando')
-
-function calculoRapidinhoRobusto(numero){
-    return numero >= 0
-        ? Promise.resolve(numero*(numero+1)/2)
-        : Promise.reject('Somente valores positivos')
-}
-
-calculoRapidinhoRobusto(20)
-    .then((resultado) => {
-        console.log(resultado)
-    })
-    .catch((err) => {
+async function chamadaComAwait(){
+    try{
+        const f1 = await fatorial(5)
+        console.log(f1)
+    } catch(err){
         console.log(err)
-    })
-
-    calculoRapidinhoRobusto(-1)
-    .then((resultado) => {
-        console.log(resultado)
-    })
-    .catch((err) => {
+    }
+    try{
+        const f2 = await fatorial(-2)
+        console.log(f2)
+    } catch(err){
         console.log(err)
-    })
+    }
+}
+chamadaComAwait()
+
+
+
+
+
+// //promises
+
+// function calculoDemorado(numero){
+//     return new Promise(function (resolve, reject) {
+//         let res = 0
+//         for (let i = 1; i <= numero; i++){
+//             res += i
+//         }
+//         resolve(res)
+//     })
+// }
+
+// calculoDemorado(10)
+//     .then((resultado)=>{
+//         console.log(resultado)
+//     })
+
+// function calculoRapidinho(numero){
+//     return Promise.resolve(numero*(numero+1)/2)
+// }
+// calculoRapidinho(100)
+//     .then((resultado) => {
+//         console.log(resultado)
+//     })
+
+// console.log('Esperando')
+
+// function calculoRapidinhoRobusto(numero){
+//     return numero >= 0
+//         ? Promise.resolve(numero*(numero+1)/2)
+//         : Promise.reject('Somente valores positivos')
+// }
+
+// calculoRapidinhoRobusto(20)
+//     .then((resultado) => {
+//         console.log(resultado)
+//     })
+//     .catch((err) => {
+//         console.log(err)
+//     })
+
+//     calculoRapidinhoRobusto(-1)
+//     .then((resultado) => {
+//         console.log(resultado)
+//     })
+//     .catch((err) => {
+//         console.log(err)
+//     })
 
 
 
