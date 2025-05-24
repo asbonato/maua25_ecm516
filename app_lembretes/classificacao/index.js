@@ -14,17 +14,13 @@ const funcoes = {
             tipo: 'ObservacaoClassificada',
             dados: observacao,
         })
-        console.log('executou', observacao)
     }
 }
 
 app.post('/eventos', (req, res) => {
     try{
-        console.log('recebeu', req.body)
         funcoes[req.body.tipo](req.body.dados)
-    } catch(err){
-        console.log(err)
-    }
+    } catch(err){}
     res.status(200).send({ msg: 'ok'})
 })
 
