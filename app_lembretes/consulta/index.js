@@ -33,13 +33,20 @@ app.post("/eventos", (req, res) => {
   res.status(200).send(baseConsulta);
 });
 
-app.listen(6000, async () => {
-  console.log("Consultas. Porta 6000");
-  const resp = await axios.get("http://10.2.128.23:10000/eventos");
-  //axios entrega os dados na propriedade data
-  resp.data.forEach((valor, indice, colecao) => {
-    try {
-      funcoes[valor.tipo](valor.dados);
-    } catch (err) {}
+app.listen(6000, () => {
+  console.log("Consultas. Porta 6000"); 
+  axios.get("http://barramento-de-eventos-service:10000/eventos")
+  .then((resp) => {
+    //axios entrega os dados na propriedade data
+    console.log('subiu')
+    resp.data.forEach((valor, indice, colecao) => {
+      try {
+        funcoes[valor.tipo](valor.dados);
+      } catch (err) {}
+    });
+  })
+  .catch((err) => {
+    console.log("\nProvavelmente o barramento não subiu, mas Consultas subiu.\n"+ 
+      '\nA mensagem de erro foi:\n', err.message)
   });
 });

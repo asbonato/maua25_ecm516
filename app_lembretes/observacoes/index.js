@@ -11,7 +11,7 @@ const funcoes = {
     const observacoes = observacoesPorLembreteId[observacao.lembreteId];
     const obsParaAtualizar = observacoes.find((o) => o.id === observacao.id);
     obsParaAtualizar.status = observacao.status;
-    axios.post("http://10.2.128.23:10000/eventos", {
+    axios.post("http://barramento-de-eventos-service:10000/eventos", {
       tipo: "ObservacaoAtualizada",
       dados: {
         id: observacao.id,
@@ -32,7 +32,7 @@ app.post("/lembretes/:id/observacoes", async (req, res) => {
   const observacoesDoLembrete = observacoesPorLembreteId[req.params.id] || [];
   observacoesDoLembrete.push({ id: idObs, texto, status: "aguardando" });
   observacoesPorLembreteId[req.params.id] = observacoesDoLembrete;
-  await axios.post("http://10.2.128.23:10000/eventos", {
+  await axios.post("http://barramento-de-eventos-service:10000/eventos", {
     tipo: "ObservacaoCriada",
     dados: {
       id: idObs,
@@ -56,5 +56,5 @@ app.post("/eventos", (req, res) => {
 });
 
 app.listen(5000, () => {
-  console.log("Observações. Porta 5000.");
+  console.log("Observações v1. Porta 5000.");
 });

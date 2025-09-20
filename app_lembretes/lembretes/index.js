@@ -30,6 +30,5 @@ app.post("/eventos", (req, res) => {
 });
 
 app.listen(4000, () => {
-  console.log("Chamando barramento-de-eventos-service")
   console.log("Lembretes. Porta 4000.");
 });

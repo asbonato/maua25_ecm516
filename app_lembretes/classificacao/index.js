@@ -9,7 +9,7 @@ const funcoes = {
     observacao.status = observacao.texto.includes(palavraChave)
       ? "importante"
       : "comum";
-    axios.post("http://10.2.128.23:10000/eventos", {
+    axios.post("http://barramento-de-eventos-service:10000/eventos", {
       tipo: "ObservacaoClassificada",
       dados: observacao,
     });
